@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f8fc">
+    <title>BhashaStudy — Learn in Your Language</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="#">
+            <span class="brand-icon">भ</span>
+            <span>BhashaStudy</span>
+        </a>
+        <span class="topbar-tag">AI-powered learning</span>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">YOUR LEARNING, YOUR LANGUAGE</p>
+            <h1>Learn better.<br><span>Speak your language.</span></h1>
+            <p class="hero-description">
+                Turn your spoken words into text and make learning
+                more accessible with multilingual AI.
+            </p>
+        </section>
+
+        <section class="workspace">
+            <div class="section-heading">
+                <div>
+                    <p class="step-label">STEP 01</p>
+                    <h2>Transcribe your audio</h2>
+                </div>
+                <span class="status-badge">
+                    <span class="status-dot"></span>
+                    Gnani AI
+                </span>
+            </div>
+
+            <form id="transcription-form">
+                <label for="language">Choose your language</label>
+                <select id="language" name="language">
+                    <option value="hi-IN">Hindi (हिन्दी)</option>
+                    <option value="en-IN">English (India)</option>
+                    <option value="ta-IN">Tamil (தமிழ்)</option>
+                    <option value="te-IN">Telugu (తెలుగు)</option>
+                    <option value="kn-IN">Kannada (ಕನ್ನಡ)</option>
+                    <option value="bn-IN">Bengali (বাংলা)</option>
+                    <option value="mr-IN">Marathi (मराठी)</option>
+                    <option value="gu-IN">Gujarati (ગુજરાતી)</option>
+                    <option value="ml-IN">Malayalam (മലയാളം)</option>
+                    <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
+                    <option value="ur-IN">Urdu (اردو)</option>
+                </select>
+
+
+                <label class="upload-area" for="audio-file">
+                    <span class="upload-icon">↑</span>
+                    <strong>Choose an audio file</strong>
+                    <span>Supported: M4A, WAV, MP3, FLAC, OGG</span>
+                    <span id="file-name" class="file-name">
+                        No file selected
+                    </span>
+                </label>
+                <input
+                    id="audio-file"
+                    name="file"
+                    type="file"
+                    accept=".m4a,.wav,.mp3,.flac,.ogg"
+                    required
+                >
+
+                <button id="transcribe-button" type="submit">
+                    Transcribe audio <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <div id="message" class="message" role="status"
+                 aria-live="polite"></div>
+
+            <section id="result-section" class="result-section" hidden>
+                <div class="result-heading">
+                    <div>
+                        <p class="step-label">YOUR RESULT</p>
+                        <h2>Transcription</h2>
+                    </div>
+                    <button id="copy-button" class="copy-button" type="button">
+                        Copy text
+                    </button>
+                </div>
+                <p id="transcript" class="transcript" lang="hi"></p>
+            </section>
+        </section>
+
+        <p class="privacy-note">
+            Your audio is processed through the configured speech-to-text API.
+        </p>
+    </main>
+
+    <footer>
+        <span>BhashaStudy</span>
+        <span>Making learning more accessible</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
