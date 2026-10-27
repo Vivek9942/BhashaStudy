@@ -1,6 +1,6 @@
 # BhashaStudy — Learn in Your Language
 
-**A multilingual, voice-based study assistant powered by Gnani AI speech-to-text technology.**
+A multilingual, voice-based study assistant powered by Gnani AI speech-to-text technology.
 
 BhashaStudy aims to make learning more accessible by allowing users to upload spoken audio and convert it into readable text in their chosen language.
 
@@ -16,8 +16,6 @@ BhashaStudy aims to make learning more accessible by allowing users to upload sp
 - **Automated tests:** Tests for API health, invalid uploads, and language validation.
 
 ## Supported Languages
-
-The current interface offers these language options:
 
 | Language | Code |
 |---|---|
@@ -58,22 +56,21 @@ BhashaStudy/
 │   ├── test_api.py
 │   ├── test_stt.py
 │   └── test_stt_unit.py
-├── .env
 ├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
+
+The `.env` file and virtual environment are created locally and are intentionally excluded from version control.
 
 ## Getting Started
 
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/Vivek9942>
+git clone https://github.com/Vivek9942/BhashaStudy.git
 cd BhashaStudy
 ```
-
-Replace the placeholder with your actual GitHub repository URL.
 
 ### 2. Create and activate a virtual environment
 
@@ -90,7 +87,7 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-### 4. Configure the API key
+### 4. Configure the Gnani AI API key
 
 Create a `.env` file in the project root:
 
@@ -98,11 +95,11 @@ Create a `.env` file in the project root:
 GNANI_API_KEY=your_gnani_api_key_here
 ```
 
-Replace the placeholder with your own API key. **Never commit your actual API key to GitHub.**
+Replace the placeholder with your own API key.
 
-Ensure `.env` is listed in `.gitignore`.
+**Security:** Never commit your actual API key to GitHub. Keep `.env` listed in `.gitignore`, and configure the key as an environment variable in your hosting platform when deploying.
 
-### 5. Start the backend
+### 5. Start the backend locally
 
 From the project root, run:
 
@@ -112,23 +109,59 @@ python -m uvicorn main:app --app-dir src --reload
 
 The backend will run at:
 
-- API: `http://127.0.0.1:8000`
-- Interactive API documentation: `http://127.0.0.1:8000/docs`
-- Health check: `http://127.0.0.1:8000/health`
+- **API:** http://127.0.0.1:8000
+- **Interactive API documentation:** http://127.0.0.1:8000/docs
+- **Health check:** http://127.0.0.1:8000/health
 
-### 6. Start the frontend
+Keep the backend terminal running while using the application.
+
+### 6. Start the frontend locally
 
 Open `frontend/index.html` using the VS Code Live Server extension.
 
 The frontend currently expects the backend at:
 
-`http://127.0.0.1:8000`
+```text
+http://127.0.0.1:8000
+```
 
-Keep the backend terminal running while using the frontend.
+Make sure the backend is running before testing transcription from the frontend.
+
+## Deployment
+
+BhashaStudy's backend can be deployed to a hosting platform such as Render. Deployment requires configuring the backend, API key, and frontend URL appropriately.
+
+### Production start command
+
+For a Linux-based hosting environment that supplies a `PORT` environment variable, use:
+
+```bash
+python -m uvicorn main:app --app-dir src --host 0.0.0.0 --port $PORT
+```
+
+This command binds the application to all network interfaces and uses the port supplied by the hosting platform.
+
+### Required environment variable
+
+Configure the following environment variable in the hosting platform's service settings:
+
+| Variable | Purpose |
+|---|---|
+| `GNANI_API_KEY` | Authenticates requests to the Gnani AI speech-to-text API |
+
+Do not place the API key in frontend JavaScript, public repository files, or committed configuration files.
+
+### Frontend configuration
+
+The frontend must send transcription requests to the deployed backend URL instead of `http://127.0.0.1:8000`.
+
+Configure the frontend's API base URL to match the actual deployed backend address. Also configure the backend's CORS settings to allow requests from the deployed frontend origin.
+
+**Deployment status:** The application has been tested locally. Public deployment and production URL verification are still pending.
 
 ## Running Tests
 
-Run the automated tests from the project root:
+Run all tests from the project root:
 
 ```powershell
 python -m unittest discover -s tests -v
@@ -146,7 +179,7 @@ Run the STT unit tests:
 python -m unittest discover -s tests -p "test_stt_unit.py" -v
 ```
 
-The live STT test in `tests/test_stt.py` sends an audio file to Gnani AI and may consume API credits.
+**Note:** The live STT test in `tests/test_stt.py` sends an audio file to Gnani AI and may consume API credits. Run it only when necessary.
 
 ## API Endpoints
 
@@ -158,30 +191,45 @@ The live STT test in `tests/test_stt.py` sends an audio file to Gnani AI and may
 
 The transcription endpoint accepts an audio file and a language code as multipart form data.
 
+Interactive API documentation is available at `/docs` while the backend is running.
+
 ## Current Status
 
 - Frontend and backend integration: working locally
 - Gnani AI speech-to-text integration: tested successfully
 - Hindi, English, and Tamil transcription: tested successfully
 - File and language validation: implemented
-- Automated API and unit tests: passing
+- API tests: passing
+- Dependency consistency check: passing
+- GitHub repository: available
+- Public deployment: pending
 
 ## Future Improvements
 
 - Expand language testing and improve language-specific error handling.
-- Add study-note generation and transcript summarization.
+- Add AI-powered study-note generation and transcript summarization.
 - Allow users to save and organize transcripts.
 - Improve accessibility and mobile responsiveness.
 - Deploy the application for public access.
+- Add further automated tests and production monitoring.
 
 ## Security
 
-- Keep API keys in environment variables.
-- Do not commit `.env`, credentials, or private configuration.
-- Review file-size limits and API usage before deploying publicly.
+- Store API keys in environment variables.
+- Never commit `.env`, credentials, or private configuration.
+- Validate uploaded file types and sizes.
+- Keep API keys on the backend; never expose them in frontend code.
+- Review API usage limits and costs before public deployment.
+- Configure CORS to allow only the required frontend origins in production.
 
 ## About
 
-BhashaStudy is being developed for the **Gnani AI Great Indian AI Internship Challenge 2026**. Its goal is to make voice-based learning more accessible across languages.
+BhashaStudy is being developed for the **Gnani AI Great Indian AI Internship Challenge 2026**.
 
-*Built with Python, FastAPI, JavaScript, and Gnani AI.*
+Its goal is to make voice-based learning more accessible by helping users convert spoken content into readable text across supported languages.
+
+**Built with Python, FastAPI, JavaScript, and Gnani AI.**
+
+**Developer:** [Vivek Pandey](https://github.com/Vivek9942)
+
+**Repository:** [github.com/Vivek9942/BhashaStudy](https://github.com/Vivek9942/BhashaStudy)
