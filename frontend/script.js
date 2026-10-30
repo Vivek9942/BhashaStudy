@@ -9,7 +9,7 @@ const resultSection = document.getElementById("result-section");
 const transcriptElement = document.getElementById("transcript");
 const copyButton = document.getElementById("copy-button");
 
-const API_URL = "http://127.0.0.1:8000/api/transcribe";
+const API_URL = "https://bhashastudy.onrender.com/api/transcribe";
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 const allowedExtensions = [".m4a", ".wav", ".mp3", ".flac", ".ogg"];
