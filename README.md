@@ -1,23 +1,40 @@
-# BhashaStudy — Learn in Your Language
+# BhashaStudy – Multilingual Voice-First Study Assistant
 
-A multilingual, voice-based study assistant powered by Gnani AI speech-to-text technology.
+<p align="center">
+  <strong>Making educational audio accessible through multilingual Speech-to-Text technology.</strong>
+</p>
 
-BhashaStudy aims to make learning more accessible by allowing users to upload spoken audio and convert it into readable text in their chosen language.
+<p align="center">
+  <a href="https://bhashastudy-frontend.onrender.com"> Live Demo</a> •
+  <a href="https://github.com/Vivek9942/BhashaStudy">GitHub Repository</a>
+</p>
 
-## Features
+---
 
-- **Multilingual transcription:** Select a language before transcribing audio.
-- **Gnani AI integration:** Uses the Gnani AI speech-to-text API.
-- **Audio uploads:** Supports M4A, WAV, MP3, FLAC, and OGG files.
-- **Transcript display:** View the generated transcript in a clean interface.
-- **Copy to clipboard:** Copy transcribed text for notes and study material.
-- **Input validation:** Checks file format, file size, empty uploads, and supported language codes.
-- **REST API:** FastAPI backend with interactive API documentation.
-- **Automated tests:** Tests for API health, invalid uploads, and language validation.
+## Overview
+
+**BhashaStudy** is a multilingual, voice-first learning assistant designed to convert spoken educational content into readable text.
+
+Students often need to revisit lectures, recorded lessons, and other educational audio materials. Listening to long recordings repeatedly can be time-consuming. BhashaStudy addresses this challenge by allowing users to upload audio recordings, select their preferred language, and generate text transcriptions using **Gnani AI's Prisma V2.5 Speech-to-Text model**.
+
+The goal is to make spoken learning content easier to access, read, revisit, and revise, particularly across supported Indian languages.
+
+## Key Features
+
+- **Multilingual Speech-to-Text:** Converts audio recordings into readable text.
+- **Indian Language Support:** Supports multiple Indian languages through Gnani AI.
+- **Audio Upload:** Accepts `.mp3`, `.wav`, `.m4a`, `.flac`, and `.ogg` files.
+- **Language Selection:** Allows users to select their preferred transcription language.
+- **FastAPI Backend:** Handles audio uploads, validation, and API communication.
+- **Simple User Interface:** Provides a clean and straightforward audio transcription experience.
+- **Input Validation:** Checks file type, file size, and supported language selection.
+- **Cloud Deployment:** Frontend and backend are deployed separately on Render.
 
 ## Supported Languages
 
-| Language | Code |
+The application currently supports the following language codes:
+
+| Language | Language Code |
 |---|---|
 | Hindi | `hi-IN` |
 | English (India) | `en-IN` |
@@ -31,39 +48,83 @@ BhashaStudy aims to make learning more accessible by allowing users to upload sp
 | Punjabi | `pa-IN` |
 | Urdu | `ur-IN` |
 
-Language availability and transcription quality depend on Gnani AI's support for the configured API account. Hindi, English, and Tamil have been tested successfully.
+*Transcription availability and quality may vary depending on the selected language and audio quality.*
 
 ## Technology Stack
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Python, FastAPI, Uvicorn
-- **Speech recognition:** Gnani AI STT API
-- **Configuration:** Environment variables with `python-dotenv`
-- **Testing:** Python `unittest`, FastAPI `TestClient`
+| Component | Technology |
+|---|---|
+| Programming Language | Python |
+| Backend Framework | FastAPI |
+| Speech-to-Text | Gnani AI Prisma V2.5 |
+| API Communication | Requests |
+| Frontend | HTML, CSS, JavaScript |
+| Environment Management | Python Virtual Environment |
+| Configuration | Python Dotenv |
+| Testing | Python Unittest |
+| Backend Deployment | Render Web Service |
+| Frontend Deployment | Render Static Site |
+| Version Control | Git and GitHub |
+
+## System Architecture
+
+```text
+                  USER
+                    |
+                    v
+          BhashaStudy Frontend
+             (HTML, CSS, JS)
+                    |
+                    v
+               Audio Upload
+                    |
+                    v
+             FastAPI Backend
+                    |
+                    v
+             Input Validation
+                    |
+                    v
+            Gnani AI API Request
+                    |
+                    v
+       Prisma V2.5 Speech-to-Text
+                    |
+                    v
+          Generated Transcription
+                    |
+                    v
+            Display Text to User
+```
 
 ## Project Structure
 
 ```text
 BhashaStudy/
+│
+├── src/
+│   ├── main.py
+│   └── gnani_stt.py
+│
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
 │   └── script.js
-├── src/
-│   ├── main.py
-│   └── gnani_stt.py
+│
 ├── tests/
 │   ├── test_api.py
 │   ├── test_stt.py
 │   └── test_stt_unit.py
+│
+├── .env
 ├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 
-The `.env` file and virtual environment are created locally and are intentionally excluded from version control.
+## Getting Started – Run Locally
 
-## Getting Started
+Follow these instructions to run BhashaStudy on your local machine.
 
 ### 1. Clone the repository
 
@@ -72,164 +133,158 @@ git clone https://github.com/Vivek9942/BhashaStudy.git
 cd BhashaStudy
 ```
 
-### 2. Create and activate a virtual environment
-
-On Windows PowerShell:
+### 2. Create a virtual environment
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+```
+
+Activate it:
+
+```powershell
+.venv\Scripts\Activate.ps1
 ```
 
 ### 3. Install dependencies
 
-```powershell
+```bash
 python -m pip install -r requirements.txt
 ```
 
-### 4. Configure the Gnani AI API key
+### 4. Configure environment variables
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root directory:
 
-```text
-GNANI_API_KEY=your_gnani_api_key_here
+```env
+GNANI_API_KEY=your_gnani_api_key
 ```
 
-Replace the placeholder with your own API key.
+Replace the placeholder with your own Gnani AI API key.
 
-**Security:** Never commit your actual API key to GitHub. Keep `.env` listed in `.gitignore`, and configure the key as an environment variable in your hosting platform when deploying.
+**Security:** Never upload your actual API key or `.env` file to GitHub.
 
-### 5. Start the backend locally
+### 5. Start the FastAPI backend
 
-From the project root, run:
-
-```powershell
+```bash
 python -m uvicorn main:app --app-dir src --reload
 ```
 
-The backend will run at:
-
-- **API:** http://127.0.0.1:8000
-- **Interactive API documentation:** http://127.0.0.1:8000/docs
-- **Health check:** http://127.0.0.1:8000/health
-
-Keep the backend terminal running while using the application.
-
-### 6. Start the frontend locally
-
-Open `frontend/index.html` using the VS Code Live Server extension.
-
-The frontend currently expects the backend at:
+The backend will be available at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Make sure the backend is running before testing transcription from the frontend.
+### 6. Open the frontend
 
-## Deployment
+Open `frontend/index.html` in your browser or use the VS Code Live Server extension.
 
-BhashaStudy's backend can be deployed to a hosting platform such as Render. Deployment requires configuring the backend, API key, and frontend URL appropriately.
+For a fully local setup, configure the frontend API URL in `frontend/script.js` to:
 
-### Production start command
-
-For a Linux-based hosting environment that supplies a `PORT` environment variable, use:
-
-```bash
-python -m uvicorn main:app --app-dir src --host 0.0.0.0 --port $PORT
+```javascript
+const API_URL = "http://127.0.0.1:8000/api/transcribe";
 ```
 
-This command binds the application to all network interfaces and uses the port supplied by the hosting platform.
+The deployed frontend is already configured to communicate with the deployed backend.
 
-### Required environment variable
+## API Endpoints
 
-Configure the following environment variable in the hosting platform's service settings:
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | Checks backend health |
+| POST | `/api/transcribe` | Uploads audio and returns transcription |
+| GET | `/docs` | Interactive API documentation |
 
-| Variable | Purpose |
+## Audio Upload Specifications
+
+| Parameter | Configuration |
 |---|---|
-| `GNANI_API_KEY` | Authenticates requests to the Gnani AI speech-to-text API |
+| Maximum File Size | 10 MB |
+| Supported Formats | MP3, WAV, M4A, FLAC, OGG |
+| Language | Supported language code |
+| Processing | Gnani AI Prisma V2.5 |
 
-Do not place the API key in frontend JavaScript, public repository files, or committed configuration files.
+## Testing
 
-### Frontend configuration
+BhashaStudy includes unit tests and API tests to verify core application functionality.
 
-The frontend must send transcription requests to the deployed backend URL instead of `http://127.0.0.1:8000`.
-
-Configure the frontend's API base URL to match the actual deployed backend address. Also configure the backend's CORS settings to allow requests from the deployed frontend origin.
-
-**Deployment status:** The application has been tested locally. Public deployment and production URL verification are still pending.
-
-## Running Tests
-
-Run all tests from the project root:
+Run the test suite using:
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-Run only the API tests:
+The tests cover:
 
-```powershell
-python -m unittest discover -s tests -p "test_api.py" -v
-```
+- Backend health endpoint.
+- Empty audio upload validation.
+- Unsupported file format rejection.
+- Unsupported language validation.
+- Speech-to-Text functionality and related unit tests.
 
-Run the STT unit tests:
+*Note: Live Speech-to-Text tests may require a valid API key and consume API credits.*
 
-```powershell
-python -m unittest discover -s tests -p "test_stt_unit.py" -v
-```
+## Gnani AI Integration
 
-**Note:** The live STT test in `tests/test_stt.py` sends an audio file to Gnani AI and may consume API credits. Run it only when necessary.
+BhashaStudy uses **Gnani AI Prisma V2.5**, a Speech-to-Text model, to convert audio recordings into text.
 
-## API Endpoints
+The integration enables:
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/` | API welcome message |
-| GET | `/health` | Health check |
-| POST | `/api/transcribe` | Transcribe an uploaded audio file |
+1. Audio submission through the FastAPI backend.
+2. Communication with the Gnani AI Speech-to-Text API.
+3. Language-specific transcription requests.
+4. Returning generated text to the frontend.
 
-The transcription endpoint accepts an audio file and a language code as multipart form data.
+**Gnani AI Resources:**
 
-Interactive API documentation is available at `/docs` while the backend is running.
+- [Gnani AI Website](https://www.gnani.ai/)
+- [Gnani AI Documentation](https://docs.gnani.ai/)
+- [Gnani AI API Dashboard](https://app.gnani.ai/voice)
 
-## Current Status
+## Deployment
 
-- Frontend and backend integration: working locally
-- Gnani AI speech-to-text integration: tested successfully
-- Hindi, English, and Tamil transcription: tested successfully
-- File and language validation: implemented
-- API tests: passing
-- Dependency consistency check: passing
-- GitHub repository: available
-- Public deployment: pending
+BhashaStudy is deployed using Render:
 
-## Future Improvements
+- **Frontend:** Render Static Site
+- **Backend:** Render Web Service
 
-- Expand language testing and improve language-specific error handling.
-- Add AI-powered study-note generation and transcript summarization.
-- Allow users to save and organize transcripts.
-- Improve accessibility and mobile responsiveness.
-- Deploy the application for public access.
-- Add further automated tests and production monitoring.
+The frontend communicates with the deployed FastAPI backend, which securely communicates with the Gnani AI API.
 
-## Security
+*Note: The backend uses Render's free hosting tier, so the first request after inactivity may take additional time while the service starts.*
 
-- Store API keys in environment variables.
-- Never commit `.env`, credentials, or private configuration.
-- Validate uploaded file types and sizes.
-- Keep API keys on the backend; never expose them in frontend code.
-- Review API usage limits and costs before public deployment.
-- Configure CORS to allow only the required frontend origins in production.
+## Future Scope
 
-## About
+The project can be extended with additional learning-focused capabilities, including:
 
-BhashaStudy is being developed for the **Gnani AI Great Indian AI Internship Challenge 2026**.
+- Automatic generation of study notes from transcriptions.
+- AI-generated quizzes and multiple-choice questions.
+- Contextual question answering based on lecture transcripts.
+- Transcript export in TXT and PDF formats.
+- Text-to-Speech support for audio-based learning.
 
-Its goal is to make voice-based learning more accessible by helping users convert spoken content into readable text across supported languages.
+*These are planned enhancements and are not currently implemented features.*
 
-**Built with Python, FastAPI, JavaScript, and Gnani AI.**
+## Project Information
 
-**Developer:** [Vivek Pandey](https://github.com/Vivek9942)
+| Detail | Information |
+|---|---|
+| Project Name | BhashaStudy |
+| Project Type | Multilingual Voice-First Study Assistant |
+| Challenge | Gnani AI Great Indian AI Internship Challenge 2026 |
+| Core AI Technology | Gnani AI Prisma V2.5 – Speech-to-Text |
+| Developer | Vivek Pandey |
 
-**Repository:** [github.com/Vivek9942/BhashaStudy](https://github.com/Vivek9942/BhashaStudy)
+**GitHub:** [Vivek9942](https://github.com/Vivek9942)  
+**LinkedIn:** [Vivek Pandey](https://www.linkedin.com/in/vivek-pandey-978128328)
+
+---
+
+## Acknowledgements
+
+Special thanks to **Gnani AI** for providing Speech-to-Text technology and the opportunity to build an application using its AI models through the Great Indian AI Internship Challenge 2026.
+
+---
+
+<p align="center">
+  <strong>BhashaStudy – Turning Spoken Learning into Readable Knowledge.</strong>
+</p>
